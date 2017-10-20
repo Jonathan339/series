@@ -59,8 +59,11 @@ class Jkanime(Conexion):
 #			print(name2)
 
 	def Capitulo(self):
+		'Extrae al enlace al capitulo'
 		pass
 	
+	def ListaCapitulos(self):
+		pass
 	'--------------------------------------------'
 
 a = Jkanime('http://jkanime.net/boku-no-kanojo-ga-majimesugiru-sho-bitch-na-ken/2/')
