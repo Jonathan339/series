@@ -1,4 +1,6 @@
 import sys
+from parse import *
+from menu import *
 
 def main():
 	pass
@@ -11,5 +13,6 @@ if __name__ == '__main__':
 	if conn ==  None:
 		conn = 8
 		pass
+	
 
 	main()
