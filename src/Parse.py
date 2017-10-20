@@ -41,12 +41,10 @@ class Jkanime(Conexion):
 		super().__init__(url)
 		self.urlbase = 'http://jkanime.net'
 
-
-     #-------------
-     def link(self):
-     	#req = requests.get(self.url)
+	def link(self):
+        #req = requests.get(self.url)
         #self.soup = bs(req.text, "html.Parser")
-        self.soup = _conn()
+        self.soup = self._conn()
         src = self.soup.find('iframe', {'class': 'player_conte'})[
             'src'].replace('jk.php?u=', '')
         return str(src)
@@ -56,7 +54,6 @@ class Jkanime(Conexion):
         return nombre.string
 
     def programacion(self):
-
         items = self.soup.find('li', {'class': 'ratedul'})
         anime_Name = []
         anime_Url = {}
