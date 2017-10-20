@@ -1,5 +1,5 @@
 from bs4 import BeautifulSoup
-import request
+import requests
 		
 		
 
@@ -12,7 +12,7 @@ class Conexion(object):
 
 	def _conn(self):
 		req =  requests.get(self.url)
-		soup = BeautifulSoup(resp.text, 'lxml')
+		soup = BeautifulSoup(req.text, 'lxml')
 		return soup
 
 class Jkanime(Conexion):
@@ -23,15 +23,22 @@ class Jkanime(Conexion):
 		self.urlbase = 'http://jkanime.net'
 
 	def link(self):
+		'Extre el enlace del video que tiene el reproductor'
 		self.soup = self._conn()
 		src = self.soup.find('iframe', {'class': 'player_conte'})['src'].replace('jk.php?u=','')
 		return str(src)
     
 	def nombre(self):
+		'Obtiene el nombre de la serie'
 		nombre = self.soup.find('div', {'class': 'vervideo'})
 		return nombre.string
 	
+	'---------------------------------------------'
+	
 	def programacion(self):
+		'''
+		Extrae la programacion de la pagina y la muestra
+		'''
 		items = self.soup.find('li', {'class': 'ratedul'})
 		anime_Name = []
 		anime_Url = {}
@@ -43,19 +50,22 @@ class Jkanime(Conexion):
 		return anime_Url, anime_Name
 		print(anime_Url)
 
-	def ver_programacion(self):
-
-		for item in items:
-			items = self.soup.find('ul', {'class': 'ratedul'})
-			name2 = items.find_all('a').get_text()
-			print(name2)
+#	def ver_programacion(self):
+#		'Muestra la programacion	
+#		'
+#		for item in items:
+#			items = self._conn.find('ul', {'class': 'ratedul'})
+#			name2 = items.find_all('a').get_text()
+#			print(name2)
 
 	def Capitulo(self):
 		pass
+	
+	'--------------------------------------------'
 
-a = Jkanime()
-print(a.ver_programacion())
-
+a = Jkanime('http://jkanime.net/boku-no-kanojo-ga-majimesugiru-sho-bitch-na-ken/2/')
+print(a.link())
+print(a.nombre())
 
 
 
