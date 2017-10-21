@@ -1,6 +1,6 @@
 import sys
-from parse import *
-from menu import *
+from src.parse import *
+from src.menu import *
 
 def main():
 	pass
@@ -15,9 +15,10 @@ if __name__ == '__main__':
 		else:
 			print('no se aceptan otras conexiones fuera de 8, 16 o 32')
 
-			if conn = None:
+			if conn == None:
 				url = conn
-				Menu = menu
+				Menu = menu()
+				Menu.Menu()
 				parse = Jkanime(url)
 
 
