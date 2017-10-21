@@ -63,6 +63,7 @@ class Jkanime(Conexion):
 		pass
 	
 	def ListaCapitulos(self):
+		'ListaCapitulos que tiene la serie'
 		pass
 	'--------------------------------------------'
 
