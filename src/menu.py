@@ -1,10 +1,13 @@
 import sys
+import descarga
 
 
+		
 
-class Menu(object):
+class Menu(descarga):
 	"""docstring for Menu"""
 	def __init__(self):
+		super(descarga, self).__init__()
 		opciones = { 1 : self.descarga,
 		             2 : self.descarga_masiva,
 		             3 : self.salir}
