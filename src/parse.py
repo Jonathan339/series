@@ -2,8 +2,6 @@ from bs4 import BeautifulSoup
 import requests
 		
 		
-
-
 class Conexion(object):
 
 	"""Constructor de la clase Conexion"""
@@ -67,9 +65,26 @@ class Jkanime(Conexion):
 		pass
 	'--------------------------------------------'
 
-a = Jkanime('http://jkanime.net/boku-no-kanojo-ga-majimesugiru-sho-bitch-na-ken/2/')
-print(a.link())
-print(a.nombre())
+class EnlaceReal(Conexion):
+	"""docstring for EnlaceReal"""
+	def __init__(self, url):
+		super().__init__(url)
+		
+	def enlace(self):
+		self.conexion = self._conn
+		#url = self.link()
+		video = self.conexion.find('video', {'class': 'vjs-tech'})['src']
+		#src =  video.find()
+		print('------')
+		print(video)
+
+		
+url2 = 'https://openload.co/embed/oB-rkAWAEiE/'
+#a = Jkanime('http://jkanime.net/imouto-sae-ireba-ii/3/')
+#print(a.link())
+#print(a.nombre())
+
+b = EnlaceReal(url2)
 
 
 
