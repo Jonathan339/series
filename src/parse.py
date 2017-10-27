@@ -79,12 +79,12 @@ class EnlaceReal(Conexion):
 		print(video)
 
 		
-url2 = 'https://openload.co/embed/oB-rkAWAEiE/'
-#a = Jkanime('http://jkanime.net/imouto-sae-ireba-ii/3/')
-#print(a.link())
-#print(a.nombre())
 
-b = EnlaceReal(url2)
+a = Jkanime('http://jkanime.net/imouto-sae-ireba-ii/3/')
+print(a.link())
+print(a.nombre())
+
+#b = EnlaceReal(url2)
 
 
 

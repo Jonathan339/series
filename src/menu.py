@@ -16,8 +16,6 @@ class Menu(descarga):
     		   1 - Descargar capitulo
     		   2 - Descarga masiva
     		   3 - Salir
-
-
     		""")
 	
 	def descarga_cap(self):
