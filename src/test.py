@@ -1,77 +1,53 @@
-
+import platform
 from bs4 import BeautifulSoup
-import requests
-from PyQt5.QtWebKitWidgets import QWebPage
-from PyQt5.QtWidgets import QApplication
-import sys
-
-class Conexion(object):
-
-	"""Constructor de la clase Conexion"""
-	def __init__(self, url):
-		self.url = url
-
-	def _conn(self):
-		req =  requests.get(self.url)
-		soup = BeautifulSoup(req.text, 'lxml')
-		return soup
+from selenium import webdriver
+import time
+from selenium.webdriver.chrome.options import Options
 
 
-class Render(QWebPage):
-    """Renderiza el HTML con PyQt5 WebKit."""
- 
-    def __init__(self, html):
-        self.html = None
-        self.app = QApplication(sys.argv)
-        QWebPage.__init__(self)
-        self.loadFinished.connect(self._loadFinished)
-        self.mainFrame().setHtml(html)
-        self.app.exec_()
- 
-    def _loadFinished(self, result):
-        self.html = self.mainFrame().toHtml()
-        self.app.quit()
+class Cliente(object):
+
+    """Constructor de la clase Conexion"""
+
+    def __init__(self, url):
+        self.url = url
+        chrome_options = Options()
+        chrome_options.add_argument("--headless")
+        self.browser = webdriver.Chrome(chrome_options=chrome_options)
+        self.start = time.time()
+        req = self.browser.get(self.url)
+        cliente = Cliente(self.url)
+        cliente.overlay_splash()
+        cliente.button()
+        print(url_video())
+
+    def ovelay_splash(self):
+        overlay_splash = self.browser.find_element_by_id('videooverlay')
+        overlay_splash.click()
+
+    def button(self):
+        button = self.browser.find_element_by_class_name('vjs-big-play-button')
+        button.click()
+
+    def url_video(self):
+        pagina = BeautifulSoup(self.browser.page_source, 'lxml')
+        url_video = pagina.find('video', {'id': 'olvideo_html5_api'})['src']
+        #url = 'https://openload.co'+url_video
+        print('https://openload.co' + url_video)
+        fin = time.time() - self.start
+        print('Segundos: %.3f' % fin)
+        self.browser.close()
+        # return url
+
+    def Sistema(self):
+
+        if platform.system() == 'Windows':
+            PHANTOMJS_PATH = './bin/phantomjs.exe'
+        else:
+            PHANTOMJS_PATH = './bin/phantomjs'
+        return PHANTOMJS_PATH
 
 
-
-
-class Enlace(Conexion):
-	"""docstring for Enlace"""
-	def __init__(self, url):
-		super().__init__(url)
-		html_video = self._conn()
-
-		#html_render = Render(html_video)
-
-		#titulo = html_video.find('span', {'class' : 'title'}).get_text()
-		#vi = html_render.find('video', {'id': 'olvideo_html5_api'})
-		print(html_video)
-
-
-class Link(Render):
-	"""docstring for Link"""
-	def __init__(self, url):
-		
-		source_html = requests.get(url).text
-		rendered_html = super().__init__(source_html)
-		soup = BeautifulSoup(rendered_html, 'lxml')
-		video = soup.find('video', {'id': 'olvideo_html5_api'})
-		print('url: {0}' .format(rendered_html))
-
-
-
-
-		
-
-
-url= ('https://openload.co/embed/oB-rkAWAEiE/')
-
-#source = requests.get(url).text
-#render = Render(source).html
-#_video = BeautifulSoup(render, 'lxml')
-#link = _video.find('href')
-
-a = Enlace(url)
-
-#print(link)
-		
+url = ('https://openload.co/embed/oB-rkAWAEiE/')
+a = Cliente(url)
+# a.url_video()
