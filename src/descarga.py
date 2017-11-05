@@ -16,7 +16,7 @@ class Descarga(object):
 		self.rango = rango
 
 	def descargar(self):
-		self.rango =
+		self.rango = 2
 
 
 		
