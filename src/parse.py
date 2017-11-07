@@ -14,7 +14,6 @@ class Conexion(object):
         soup = BeautifulSoup(req.text, 'lxml')
         return soup
 
-
 class Jkanime(Conexion):
     """Clase Jkanime que hereda la conexion"""
 
@@ -41,24 +40,40 @@ class Jkanime(Conexion):
         '''
         Extrae la programacion de la pagina y la muestra
         '''
-        items = self.soup.find('li', {'class': 'ratedul'})
         anime_Name = []
         anime_Url = {}
+        items = self.soup.find('li', {'class': 'ratedul'})
         for item in items:
             name = item.find_all('a')[1].get_text()
             url = item.find_all('a')[1]['href']
             animeNames.append(name)
             animeUrls.update({name: url})
-        return anime_Url, anime_Name
-        print(anime_Url)
 
-#	def ver_programacion(self):
-#		'Muestra la programacion
-#		'
-#		for item in items:
-#			items = self._conn.find('ul', {'class': 'ratedul'})
-#			name2 = items.find_all('a').get_text()
-#			print(name2)
+        return anime_Url, anime_Name
+        #print(anime_Url)
+
+    def ver_programacion(self):
+        'Muestra la programacion'
+        conn = Conexion(self.urlbase)._conn()
+
+        items = conn.find_all('ul', {'class': 'ratedul'})
+        #items2 = items.find('li')
+        print(items)
+
+        for item in items:
+            name = item.find_all('a')[1].get_text()
+            print(name)
+            url = item.find_all('a')[1]['href']
+            #url = item.find('a',{'class':'rated_more'})['href']
+            cap = item.span.get_text().split()[1]
+            print(
+                '''
+                    ------------------------------------
+                    Nombre:   {0}
+                    Enlace:   {1}
+                    Capitulo: {2} 
+                    ------------------------------------
+                '''.format(name, url, cap))
 
     def Capitulo(self):
         'Extrae al enlace al capitulo'
@@ -89,4 +104,5 @@ a = Jkanime('http://jkanime.net/boku-no-kanojo-ga-majimesugiru-sho-bitch-na-ken/
 #print(a.link())
 print(a.nombre())
 
+a.ver_programacion()
 #b = EnlaceReal(url2)

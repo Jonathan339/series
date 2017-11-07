@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 import platform
 from bs4 import BeautifulSoup
 from selenium import webdriver
@@ -26,11 +27,11 @@ class Cliente_Chrome(object):
         pagina = BeautifulSoup(self.browser.page_source, 'lxml')
         url_video = pagina.find('video', {'id': 'olvideo_html5_api'})['src']
         url = 'https://openload.co'+url_video
-        print('https://openload.co' + url_video)
+        #print('https://openload.co' + url_video)
         fin = time.time() - self.start
         print('Segundos: %.3f' % fin)
         self.browser.quit()
-        #return url
+        return url
 
 
 class Cliente_Phantomjs(object):
@@ -49,9 +50,8 @@ class Cliente_Phantomjs(object):
 		#button = self.browser.find_element_by_id('anim-container')
 		#button.click()
 		
-
-
 	def url_video(self):
+		
 		pagina = BeautifulSoup(self.browser.page_source, 'lxml', from_encoding="utf-8")
 		pagina1 = self.browser.page_source
 		print(pagina1)
