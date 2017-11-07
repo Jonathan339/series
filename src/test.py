@@ -11,10 +11,10 @@ class Cliente_Chrome(object):
 
     def __init__(self, url):
         self.url = url
-        chrome_options = Options()
-        chrome_options.add_argument("--headless")
-        self.browser = webdriver.Chrome(chrome_options=chrome_options)
-        #self.browser = webdriver.Chrome()
+        #chrome_options = Options()
+        #chrome_options.add_argument("--headless")
+        #self.browser = webdriver.Chrome(chrome_options=chrome_options)
+        self.browser = webdriver.Chrome()
         self.start = time.time()
         self.browser.get(self.url)
         #self.browser.save_screenshot('screen.png')
