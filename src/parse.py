@@ -42,32 +42,27 @@ class Jkanime(Conexion):
         '''
         anime_Name = []
         anime_Url = {}
-        items = self.soup.find('li', {'class': 'ratedul'})
+        items = self.soup.find('ul', {'class': 'ratedul'})
         for item in items:
             name = item.find_all('a')[1].get_text()
             url = item.find_all('a')[1]['href']
             animeNames.append(name)
             animeUrls.update({name: url})
 
-        return anime_Url, anime_Name
-        #print(anime_Url)
+        #return anime_Url, anime_Name
+        print(anime_Url)
 
     def ver_programacion(self):
         'Muestra la programacion'
         conn = Conexion(self.urlbase)._conn()
-
-        items = conn.find_all('ul', {'class': 'ratedul'})
-        #items2 = items.find('li')
-        print(items)
-
-        for item in items:
-            name = item.find_all('a')[1].get_text()
-            print(name)
-            url = item.find_all('a')[1]['href']
-            #url = item.find('a',{'class':'rated_more'})['href']
-            cap = item.span.get_text().split()[1]
-            print(
-                '''
+        
+        #print(items)
+        for item in conn.find_all('ul',{'class':'ratedul'}):
+            for litag in item.find_all('li'):
+                name = litag.find('a','rated_title').get_text()
+                url = litag.find('a','rated_title').get('href')
+                cap = litag.find('div',{'class':'rated_stars'}).span.get_text().split()[1]
+                print( '''
                     ------------------------------------
                     Nombre:   {0}
                     Enlace:   {1}
