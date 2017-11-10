@@ -3,7 +3,7 @@ PAGINA = "http://jkanime.net"
 
 #webdriver Chrome
 
-CHROME = ""
+CHROME = "./bin/chromedriver.exe"
 
 #path donde guarda la descarga.	
 PATH_DESCARGA	=	"/Descargas/"

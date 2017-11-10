@@ -5,16 +5,18 @@ from selenium import webdriver
 import time
 from selenium.webdriver.chrome.options import Options
 from selenium.common.exceptions import NoSuchElementException
+from config import *
+import sys
 
 
 class Cliente_Chrome(object):
 
     def __init__(self, url):
         self.url = url
-        #chrome_options = Options()
-        #chrome_options.add_argument("--headless")
-        #self.browser = webdriver.Chrome(chrome_options=chrome_options)
-        self.browser = webdriver.Chrome()
+        chrome_options = Options()
+        chrome_options.add_argument("--headless")
+        self.browser = webdriver.Chrome(CHROME, chrome_options=chrome_options)
+        #self.browser = webdriver.Chrome()
         self.start = time.time()
         self.browser.get(self.url)
         #self.browser.save_screenshot('screen.png')
