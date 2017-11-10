@@ -1,6 +1,10 @@
 #Enlace a la pagina
 PAGINA = "http://jkanime.net"
 
+#webdriver Chrome
+
+CHROME = ""
+
 #path donde guarda la descarga.	
 PATH_DESCARGA	=	"/Descargas/"
 

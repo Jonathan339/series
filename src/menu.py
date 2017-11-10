@@ -1,5 +1,6 @@
 import sys
-import descarga
+from descarga import Descarga
+from parse import Parse, Conexion
 
 
 		
@@ -15,11 +16,14 @@ class Menu(descarga):
 		print("""
     		   1 - Descargar capitulo
     		   2 - Descarga masiva
-    		   3 - Salir
+    		   3 - Buscar
+    		   4 - Salir
     		""")
 	
 	def descarga_cap(self):
-		print("""Ingrese la url del capitulo""")
+		#print("""Ingrese la url del capitulo""")
+		url = input("Ingrese la url del capitulo")
+
 		
 	
 	def help(self):

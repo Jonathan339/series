@@ -20,18 +20,17 @@ class Cliente_Chrome(object):
         #self.browser.save_screenshot('screen.png')
         overlay_splash = self.browser.find_element_by_id('videooverlay')
         overlay_splash.click()
-        #button = self.browser.find_element_by_class_name('vjs-big-play-button')
-        #button.click()
+        
 
     def url_video(self):
         pagina = BeautifulSoup(self.browser.page_source, 'lxml')
         url_video = pagina.find('video', {'id': 'olvideo_html5_api'})['src']
         url = 'https://openload.co'+url_video
-        #print('https://openload.co' + url_video)
         fin = time.time() - self.start
+        print(url)
         print('Segundos: %.3f' % fin)
-        self.browser.quit()
-        return url
+        self.browser.quit()        
+        #return url
 
 
 class Cliente_Phantomjs(object):
@@ -47,8 +46,7 @@ class Cliente_Phantomjs(object):
 		# selecciona el elemento al que se hace click
 		overlay_splash = self.browser.find_element_by_id('videooverlay')
 		overlay_splash.click()
-		#button = self.browser.find_element_by_id('anim-container')
-		#button.click()
+		
 		
 	def url_video(self):
 		

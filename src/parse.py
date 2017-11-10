@@ -37,8 +37,7 @@ class Jkanime(Conexion):
         self.soup = self._conn()
         nombre = self.soup.find('div', {'class': 'vervideo'})
         return nombre.string
-
-    '---------------------------------------------'
+    
 
     def programacion(self):
         '''
@@ -76,7 +75,6 @@ class Jkanime(Conexion):
         'ListaCapitulos que tiene la serie'
         self.url = url
         super().__init__(url)
-        
         for ul_list in self._conn.find_all('ul', {'class':'listpage'}):
             for litag in ul_list.find_all('a'):
                 print(litag['href'])
