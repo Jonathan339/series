@@ -5,6 +5,10 @@ PAGINA = "http://jkanime.net"
 
 CHROME = "./bin/chromedriver.exe"
 
+#webdriver
+PHANTOMJS_WIN = "phantomjs.exe"
+
+
 #path donde guarda la descarga.	
 PATH_DESCARGA	=	"/Descargas/"
 

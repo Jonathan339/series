@@ -4,9 +4,55 @@ from bs4 import BeautifulSoup
 from selenium import webdriver
 import time
 from selenium.webdriver.chrome.options import Options
-from selenium.common.exceptions import NoSuchElementException
 from config import *
-import sys
+import sys , os
+from PyQt5.QtWebKitWidgets import QWebPage
+from PyQt5.QtWidgets import QApplication
+
+
+class Render(QWebPage):
+    """Render HTML with PyQt5 WebKit."""
+
+    def __init__(self, html):
+        self.html = None
+        self.app = QApplication(sys.argv)
+        QWebPage.__init__(self)
+        self.loadFinished.connect(self._loadFinished)
+        self.mainFrame().setHtml(html)
+        self.app.exec_()
+
+    def _loadFinished(self, result):
+        self.html = self.mainFrame().toHtml()
+        self.app.quit()
+
+
+class Sesion():
+	def __init__(self, url):
+		source_html = requests.get(url).text
+		self.render = Render(source_html).html
+		soup = BeautifulSoup(self.render, 'html.parser')
+
+	def render(self):
+		print(self.render)
+
+
+
+url = 'https://openload.co/embed/oB-rkAWAEiE/'
+a = Sesion(url)
+a.render()
+
+# get the raw HTML
+#source_html = requests.get(url).text
+
+# return the JavaScript rendered HTML
+#with Display(visible=0, size=(800, 600)):
+#rendered_html = Render(source_html).html
+
+# get the BeautifulSoup
+#soup = BeautifulSoup(rendered_html, 'html.parser')
+
+#print(rendered_html)
+
 
 
 class Cliente_Chrome(object):
@@ -39,8 +85,8 @@ class Cliente_Phantomjs(object):
 
 	def __init__(self, url):
 		self.url = url
-		self.browser = webdriver.Chrome()
-		#self.browser = webdriver.PhantomJS()
+		#self.browser = webdriver.Chrome()
+		self.browser = webdriver.PhantomJS('C://Users//x//Desktop//Repositorio//series//src//bin//phantomjs.exe')
 		#self.browser.set_window_size(1000, 700)
 		self.start = time.time()
 		self.browser.get(self.url)
@@ -51,14 +97,12 @@ class Cliente_Phantomjs(object):
 		
 		
 	def url_video(self):
-		
-		pagina = BeautifulSoup(self.browser.page_source, 'lxml', from_encoding="utf-8")
+		pagina = BeautifulSoup(self.browser.page_source, "html.parser", from_encoding='utf-8')
 		pagina1 = self.browser.page_source
 		print(pagina1)
 		print('-'*100)
 		url_video = pagina.find('video', {'id': 'olvideo_html5_api'})['src']
-	    # url = 'https://openload.co'+url_video
-		print('https://openload.co' + str(url_video))
+		print('https://openload.co' + url_video)
 		fin = time.time() - self.start
 		print('phantomjs')
 		print('Segundos: %.3f' % fin)
@@ -66,15 +110,16 @@ class Cliente_Phantomjs(object):
 
 	def sistema(self):
 		if platform.system() == 'Windows':
-			PHANTOMJS_PATH = './bin/phantomjs.exe'
+			PHANTOMJS_PATH = os.path.abspath('phantomjs.exe')
 		else:
-			PHANTOMJS_PATH = './bin/phantomjs'
+			PHANTOMJS_PATH = os.path.abspath('phantomjs')			
 		return PHANTOMJS_PATH
 
 
 
 url = ('https://openload.co/embed/oB-rkAWAEiE/')
-a = Cliente_Chrome(url).url_video()
+a = Cliente_Phantomjs(url).url_video()
+
 
 #a.url_video()
 
