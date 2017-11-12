@@ -8,6 +8,8 @@ from config import *
 import sys , os
 from PyQt5.QtWebKitWidgets import QWebPage
 from PyQt5.QtWidgets import QApplication
+import requests
+
 
 
 class Render(QWebPage):
@@ -28,30 +30,21 @@ class Render(QWebPage):
 
 class Sesion():
 	def __init__(self, url):
+		# La raw HTML
 		source_html = requests.get(url).text
-		self.render = Render(source_html).html
-		soup = BeautifulSoup(self.render, 'html.parser')
+		#retorna el JavaScript renderizado en HTML
+		self.render_html = Render(source_html).html
+		# creo un objeto manejable con BeautifulSoup
+		self.soup = BeautifulSoup(self.render_html, 'html.parser')
 
 	def render(self):
-		print(self.render)
+		print(self.render_html)
 
 
 
 url = 'https://openload.co/embed/oB-rkAWAEiE/'
-a = Sesion(url)
-a.render()
+a = Sesion(url).render()
 
-# get the raw HTML
-#source_html = requests.get(url).text
-
-# return the JavaScript rendered HTML
-#with Display(visible=0, size=(800, 600)):
-#rendered_html = Render(source_html).html
-
-# get the BeautifulSoup
-#soup = BeautifulSoup(rendered_html, 'html.parser')
-
-#print(rendered_html)
 
 
 
@@ -117,8 +110,8 @@ class Cliente_Phantomjs(object):
 
 
 
-url = ('https://openload.co/embed/oB-rkAWAEiE/')
-a = Cliente_Phantomjs(url).url_video()
+#url = ('https://openload.co/embed/oB-rkAWAEiE/')
+#a = Cliente_Phantomjs(url).url_video()
 
 
 #a.url_video()
