@@ -1,4 +1,4 @@
-import os, shutil
+import os, shutil, sys
 import time
 import requests
 from pathlib import Path
@@ -35,14 +35,22 @@ class Descarga:
 			path = PATH_DESCARGA
 		return path
 
-	def sistema(self, path, file):
-		pass
+	def path(self, _path, file):
+		'Cambia de lado la barra lateral según el sistema operativo.'
+		if os.name == 'nt':
+			_path = _path+chr(92)+file
+		else:
+			_path = _path+chr(47)+file
+		return path
 
 	def move(self, file):
 		'''mueve el archivo a la carpeta Directorio. Si el archivo ya existe se sobreescribe.'''
-		path_actual = os.path.normpath(os.path.join(os.getcwd()+chr(92)+file))
+		#path_actual = os.path.normpath(os.path.join(os.getcwd()+chr(92)+file))
+		#path_actual = self.path(PATH_ACTUAL, file)
+		#path_carpeta = PATH_DESCARGA + chr(92)+file
+		#path_carpeta = self.path(PATH_DESCARGA, file)
 		if os.path.exists(file):
-			shutil.move(os.path.join(path_actual), os.path.join(PATH_DESCARGA+chr(92)+file))
+			shutil.move(os.path.join(self.path(PATH_ACTUAL, file)), os.path.join(self.path(PATH_DESCARGA, file)))
 		else:
 			print('El archivo no existe.')
 		
