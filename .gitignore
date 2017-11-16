@@ -103,6 +103,8 @@ ENV/
 
 ### pydev ###
 .pydevproject
+./.project
+.project
 
 
 ### SublimeText ###

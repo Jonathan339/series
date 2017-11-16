@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 import platform
-from bs4 import BeautifulSoup
+
 from selenium import webdriver
 import time
 from selenium.webdriver.chrome.options import Options
@@ -9,6 +9,7 @@ import sys , os
 from PyQt5.QtWebKitWidgets import QWebPage
 from PyQt5.QtWidgets import QApplication
 import requests
+from bs4 import BeautifulSoup
 
 
 
@@ -34,11 +35,22 @@ class Sesion():
 		source_html = requests.get(url).text
 		#retorna el JavaScript renderizado en HTML
 		self.render_html = Render(source_html).html
+		
+		
+		self.button = self.render_html.findFirst("button[id=videooverlay]")
+		self.button.click()
 		# creo un objeto manejable con BeautifulSoup
 		self.soup = BeautifulSoup(self.render_html, 'html.parser')
+		#overlay_splash = self.soup.find_element_by_id('videooverlay')
+        #overlay_splash.click()
 
 	def render(self):
-		print(self.render_html)
+		print(self.button)
+
+
+	def url_video(self):
+		pass
+
 
 
 

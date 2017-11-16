@@ -1,25 +1,30 @@
-from tkinter import Tk, Label, Button, Listbox
+import sys
+from PyQt5.QtCore import QCoreApplication
+from PyQt5.QtGui import *
+from PyQt5.QtWidgets import QApplication, QWidget, QMainWindow, QPushButton
 
-class MyFirstGUI:
-    def __init__(self, master):
-        self.master = master
-        master.title("vercion 0.0.20")
 
-        self.label = Label(master, text="")
-        self.label.pack()
+class window(QMainWindow):
 
-        self.lbprogramacion = Label(master, text="Programación")
-        self.lbprogramacion.pack()
+    def __init__(self):
+        super(window, self).__init__()
+        self.setGeometry(50, 50, 500, 300)
+        self.setWindowTitle('pyqt5 Tut')
+        # self.setWindowIcon(QIcon('pic.png'))
+        self.home()
 
-        self.greet_button = Button(master, text="Greet", command=self.greet)
-        self.greet_button.pack()
+    def home(self):
+        btn = QPushButton('quit', self)
+        btn.clicked.connect(QCoreApplication.instance().quit)
+        btn.resize(100, 100)
+        btn.move(100, 100)
+        self.show()
 
-        self.close_button = Button(master, text="Close", command=master.quit)
-        self.close_button.pack()
+        
 
-    def greet(self):
-        print("Greetings!")
+def run():
+    app = QApplication(sys.argv)
+    Gui = window()
+    sys.exit(app.exec_())
 
-root = Tk()
-my_gui = MyFirstGUI(root)
-root.mainloop()
+run()

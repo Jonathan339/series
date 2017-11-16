@@ -24,12 +24,13 @@ class Jkanime(Conexion):
     def __init__(self, url= PAGINA):
         super().__init__(PAGINA)
         #print(self.link())
+        self.pagina = url
 
-    def link(self, url):
+    def link(self, url=None):
         'Extre el enlace del video que tiene el reproductor'
-        self.soup = self._conn(url)
-        src = self.soup.find('iframe', {'class': 'player_conte'})[
-            'src'].replace('jk.php?u=', '')
+        if url != None:
+            self.soup = self._conn(url)
+            src = self.soup.find('iframe', {'class': 'player_conte'})['src'].replace('jk.php?u=', '')
         return str(src)
 
     def nombre(self):
@@ -94,9 +95,9 @@ class EnlaceReal(Conexion):
         print(video)
 
 
-a = Jkanime('http://jkanime.net/boku-no-kanojo-ga-majimesugiru-sho-bitch-na-ken/5/')
-#print(a.link())
-#print(a.nombre())
+a = Jkanime('http://jkanime.net/boku-no-kanojo-ga-majimesugiru-sho-bitch-na-ken/5/').link()
+print(a)
+print(a.nombre())
 b = Jkanime
 a.ver_programacion()
 #b = EnlaceReal(url2)
