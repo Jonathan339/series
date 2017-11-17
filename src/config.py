@@ -11,10 +11,11 @@ PHANTOMJS_WIN = "phantomjs.exe"
 
 
 #path donde guarda la descarga.	
-PATH_DESCARGA	=	os.path.normpath(os.path.join(os.getcwd(), 'Descargas'))
+PATH_DESCARGA = os.path.normpath(os.path.join(os.getcwd(), 'Descargas'))
 PATH_ACTUAL = os.path.normpath(os.path.join(os.getcwd()))
 
-print(PATH_ACTUAL)
+#print(PATH_ACTUAL)
+#print(PATH_DESCARGA)
 
 EXTENCION	= ".mp4"
 #Mensaje que se muestra al iniciar la descarga del archivo.
