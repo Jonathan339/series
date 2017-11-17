@@ -16,11 +16,13 @@ class Descarga:
 
 
 	def descargar(self):
-		"""Metodo que realiza la descarga."""
+		"""Metodo que realiza la descarga. Retorna el archivo en el directorio indicado
+		   en el modulo config.py en la variable PATH_DESCARGA.
+		"""
 		r = requests.get(self.url, stream=True)
 		with open(self.nombre, 'wb') as f:
 			for chunk in r.iter_content(chunk_size=1024):
-				if chunk: # filter out keep-alive new chunks
+				if chunk: # filtrar las nuevas parter del archivo 
 					f.write(chunk)
 		return self.move(self.nombre)
 
