@@ -3,39 +3,33 @@ import requests
 from config import *
 
 
+
 class Conexion(object):
 
     """Constructor de la clase Conexion"""
-
     def __init__(self, url):
         self.url = url
 
-    def _conn(self, url = None):
-        if url == None:
-            req = requests.get(self.url)
-        else:
-            req = requests.get(url)
+    def _conn(self):
+        req =  requests.get(self.url)
         soup = BeautifulSoup(req.text, 'lxml')
         return soup
 
 class Jkanime(Conexion):
-    """Clase Jkanime que hereda la conexion"""
+    """Clase Jkanime que hereda la conexion """
 
-    def __init__(self, url= PAGINA):
-        super().__init__(PAGINA)
-        #print(self.link())
-        self.pagina = url
+    def __init__(self, url=PAGINA):
+        super().__init__(url)
+        
 
-    def link(self, url=None):
+    def link(self):
         'Extre el enlace del video que tiene el reproductor'
-        if url != None:
-            self.soup = self._conn(url)
-            src = self.soup.find('iframe', {'class': 'player_conte'})['src'].replace('jk.php?u=', '')
+        self.soup = self._conn()
+        src = self.soup.find('iframe', {'class': 'player_conte'})['src'].replace('jk.php?u=','')
         return str(src)
-
+    
     def nombre(self):
         'Obtiene el nombre de la serie'
-        self.soup = self._conn()
         nombre = self.soup.find('div', {'class': 'vervideo'})
         return nombre.string
     
@@ -79,11 +73,11 @@ class Jkanime(Conexion):
         for ul_list in self._conn.find_all('ul', {'class':'listpage'}):
             for litag in ul_list.find_all('a'):
                 print(litag['href'])
-    '--------------------------------------------'
+   
 
 
 class EnlaceReal(Conexion):
-    """docstring for EnlaceReal"""
+    """Esta clase se usa para obtener el enlace real del straming."""
 
     def __init__(self, url):
         super().__init__(url)
@@ -91,13 +85,15 @@ class EnlaceReal(Conexion):
     def enlace(self):
         self.conexion = self._conn
         video = self.conexion.find('video', {'class': 'vjs-tech'})['src']
-        print('------')
         print(video)
 
 
-a = Jkanime('http://jkanime.net/boku-no-kanojo-ga-majimesugiru-sho-bitch-na-ken/5/').link()
-print(a)
+a = Jkanime('http://jkanime.net/boku-no-kanojo-ga-majimesugiru-sho-bitch-na-ken/2/')
+print(a.link())
 print(a.nombre())
-b = Jkanime
-a.ver_programacion()
+
+b = Jkanime().ver_programacion()
+
+#b = Jkanime
+#a.ver_programacion()
 #b = EnlaceReal(url2)

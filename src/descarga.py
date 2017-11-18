@@ -55,7 +55,7 @@ class Descarga:
 		   puede agregar la cabezera de Range a su solicitud.
 		   Range: bytes=StartPos-StopPos
 		   Recivira la parte entre StartPos-StopPos.
-		   """
+		"""
 		resume_header = {'Range': 'bytes=%d-' % resume_byte_pos}
 		return requests.get(fileurl, headers=resume_header, stream=True,  verify=False, allow_redirects=True)
 
