@@ -1,7 +1,8 @@
 import sys
-from descarga import Descarga
-from parse import Jkanime, Conexion
+
 from config import *
+from descarga import Descarga
+from parse import Conexion,Jkanime 
 
 
 		
@@ -45,9 +46,3 @@ class Menu():
 		pass
     	
 
-
-		
-
-a = Menu()
-input()
-		

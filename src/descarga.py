@@ -1,11 +1,11 @@
 import os, shutil, sys
-import time, decimal
+import time
 import requests
-from pathlib import Path
 from config import *
 
+
 class Descarga:
-	"""docstring for Descarga"""
+	"""Clase encargada de realizar las descargas y obtener información del archivo."""
 	def __init__(self, url, nombre):
 		
 		"""La clase recibe como parametros las conexiones, el tamaño o rango y la url."""
@@ -14,12 +14,11 @@ class Descarga:
 		self.nombre = nombre + EXTENCION
 		#obtiene el tañano del archivo
 		self.file_size = requests.get(self.url, stream=True).headers['Content-length']
-
 		self.directorio()
-		self.size()
+		self.get_size()
 
 
-	def size(self):
+	def get_size(self):
 		"""Este metodo devuelve el tamaño real del archivo."""
 		sf = self.file_size
 		kb = 2**10
@@ -39,16 +38,34 @@ class Descarga:
 		"""Metodo que realiza la descarga. Retorna el archivo en el directorio indicado
 		   en el modulo config.py en la variable PATH_DESCARGA.
 		"""
-		
 		#obtiene la respuesta del servidor para descargar
 		r = requests.get(self.url, stream=True)
+		time_start = time.clock()
 		with open(self.nombre, 'wb') as f:
 			for chunk in r.iter_content(chunk_size=1024):
 				if chunk: # filtrar las nuevas parter del archivo 
 					f.write(chunk)
 		return self.move(self.nombre)
+		#print(str( time.clock()-time_start/int(self.file_size)))
 
 
+	def reanudar_descarga(fileurl, resume_byte_pos):
+		"""Metodo para reanudar la descarga si es que se para, recibe como parametro 
+		   el tamaño actual del archivo, si el servidor web admite la solicitud Range,
+		   puede agregar la cabezera de Range a su solicitud.
+		   Range: bytes=StartPos-StopPos
+		   Recivira la parte entre StartPos-StopPos.
+		   """
+		resume_header = {'Range': 'bytes=%d-' % resume_byte_pos}
+		return requests.get(fileurl, headers=resume_header, stream=True,  verify=False, allow_redirects=True)
+
+	def descarga_masiva(self, inicio, fin):
+		"""Metodo que se encarga de la descarga masiva de los videos."""
+		self.inicio = inicio
+		self.fin = fin
+
+
+		
 	def directorio(self, file=None):
 		"""Crea la carpeta Descargas si no existe."""
 		if not os.path.exists(PATH_DESCARGA):
@@ -66,8 +83,7 @@ class Descarga:
 		return path_archivo
 
 	def move(self, file):
-		"""mueve el archivo a la carpeta Directorio. Si el archivo ya existe se sobreescribe."""
-		
+		"""Mueve el archivo a la carpeta Directorio. Si el archivo ya existe se sobreescribe."""
 		if os.path.isdir(PATH_DESCARGA):
 			if os.path.exists(file):
 				shutil.move(os.path.join(self.path(PATH_ACTUAL, file)), os.path.join(self.path(PATH_DESCARGA, file)))
