@@ -1,5 +1,5 @@
 import os, shutil, sys
-import time
+import time, decimal
 import requests
 from pathlib import Path
 from config import *
@@ -12,13 +12,35 @@ class Descarga:
 		
 		self.url = url
 		self.nombre = nombre + EXTENCION
+		#obtiene el tañano del archivo
+		self.file_size = requests.get(self.url, stream=True).headers['Content-length']
+
 		self.directorio()
+		self.size()
+
+
+	def size(self):
+		"""Este metodo devuelve el tamaño real del archivo."""
+		sf = self.file_size
+		kb = 2**10
+		mb = 2**20
+		gb = 2**30
+		tb = 2**40
+		if int(sf) >= kb and int(sf) <= mb:
+			size_file = round(int(sf)/kb, 1)
+		elif int(sf) >= mb and int(sf) <= gb:
+			size_file = round(int(sf)/mb, 1)
+		elif int(sf) >= gb and int(sf) <= tb:
+			size_file = round(int(sf)/gb, 1)
+		return size_file
 
 
 	def descargar(self):
 		"""Metodo que realiza la descarga. Retorna el archivo en el directorio indicado
 		   en el modulo config.py en la variable PATH_DESCARGA.
 		"""
+		
+		#obtiene la respuesta del servidor para descargar
 		r = requests.get(self.url, stream=True)
 		with open(self.nombre, 'wb') as f:
 			for chunk in r.iter_content(chunk_size=1024):
@@ -52,7 +74,7 @@ class Descarga:
 			else:
 				print('El archivo no existe.')
 		else:
-			print('El Directorio no existe.')
+			print('El directorio no existe.')
 		
 
 	
